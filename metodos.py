@@ -34,10 +34,77 @@ class Metodos():
             query.bindValue(':tiempo', 0)
             query.bindValue(':puntos', 0)
             print(nombreJugador)
+
             if query.exec_():
                 print('Insercción Correcta')
             else:
                 print('Error alta jugadores:', query.lastError().text())
+
+
+    @staticmethod
+    def ModificarJugador(nombre,tiempo,puntos):
+
+        if nombre != '':
+            query = QtSql.QSqlQuery()
+            query.prepare('update Jugadores set tiempo=:tiempo, puntos=:puntos where nombre=:nombre')
+
+            query.bindValue(':nombre', str(nombre))
+            query.bindValue(':tiempo', int(tiempo))
+            query.bindValue(':puntos', int(puntos))
+
+            if query.exec_():
+                Metodos.MostrarNombreJugadores()
+                Metodos.MostrarTop5()
+                print('Update Correcto')
+            else:
+                print('Error modificar jugadores:', query.lastError().text())
+
+
+    @staticmethod
+    def BorrarJugadores(nombre):
+
+        if nombre != '':
+            query = QtSql.QSqlQuery()
+            query.prepare('delete from Jugadores where nombre = :nombreJugador')
+            query.bindValue(':nombreJugador', str(nombre))
+            if query.exec_():
+                Metodos.MostrarNombreJugadores()
+            else:
+                print('Error al borrar jugador')
+        else :
+            print('No hay nombre')
+
+
+    @staticmethod
+    def BuscarJugador(nombre):
+
+        if nombre != '':
+            query = QtSql.QSqlQuery()
+            query.prepare('select * from Jugadores where nombre = :nombreJugador')
+            query.bindValue(':nombreJugador', str(nombre))
+            if query.exec_():
+                while query.next():
+                    datos = [str(query.value(0)),str(query.value(1)),str(query.value(2))]
+                    return datos
+            else:
+                datos = ["","",""]
+                return datos
+
+
+    @staticmethod
+    def ListaJugadores():
+
+        datos = []
+        query = QtSql.QSqlQuery()
+        query.prepare('select * from Jugadores')
+        if query.exec_():
+            while query.next():
+                datos.append({'Nombre':query.value(0),'Tiempo':query.value(1),'Puntos':query.value(2)})
+            datos.sort(key=lambda x: x.get('Puntos'), reverse=True)
+            return datos
+        else:
+            return []
+            print('Error al listar jugadores')
 
 
     @staticmethod

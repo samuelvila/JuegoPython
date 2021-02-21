@@ -14,6 +14,10 @@ class Main(QtWidgets.QMainWindow):
         QtWidgets.QAction(self).triggered.connect(self.close)
 
         var.ui.btnCargarJugador.clicked.connect(metodos.Metodos.CargarJugadores)
+        var.ui.btnCargarJugador.clicked.connect(metodos.Metodos.MostrarNombreJugadores)
+
+
+        var.ui.btnBorrar.clicked.connect(metodos.Metodos.ListaJugadores)
 
 
         metodos.Metodos.conexionBaseDeDatos(var.archivoDB)
