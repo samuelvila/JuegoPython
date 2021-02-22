@@ -1,3 +1,5 @@
+import sys
+
 from PyQt5 import QtSql, QtWidgets, QtCore
 
 import var
@@ -22,7 +24,7 @@ class Metodos():
 
     @staticmethod
     def CargarJugadores():
-        nombreJugador = var.ui.editNombre.text()
+        nombreJugador = var.ui.editNombre.text().replace(' ', '')
 
         if nombreJugador == '':
             print('Nombre del jugador vacio')
@@ -33,12 +35,12 @@ class Metodos():
             query.bindValue(':nombre',str(nombreJugador))
             query.bindValue(':tiempo', 0)
             query.bindValue(':puntos', 0)
-            print(nombreJugador)
 
             if query.exec_():
                 print('Insercción Correcta')
             else:
                 print('Error alta jugadores:', query.lastError().text())
+            var.ui.editNombre.setText('')
 
 
     @staticmethod
@@ -90,6 +92,23 @@ class Metodos():
                 datos = ["","",""]
                 return datos
 
+    @staticmethod
+    def BuscarJugadorBtn():
+        nombre = var.ui.editNombre.text()
+
+        if nombre != '':
+            query = QtSql.QSqlQuery()
+            query.prepare('select * from Jugadores where nombre = :nombreJugador')
+            query.bindValue(':nombreJugador', str(nombre))
+            if query.exec_():
+                while query.next():
+                    var.ui.tablaJugadores.setRowCount(1)
+                    var.ui.tablaJugadores.setItem(0, 0, QtWidgets.QTableWidgetItem(str(query.value(0))))
+                    var.ui.tablaJugadores.setItem(0, 1, QtWidgets.QTableWidgetItem(str(query.value(1))))
+                    var.ui.tablaJugadores.setItem(0, 2, QtWidgets.QTableWidgetItem(str(query.value(2))))
+
+
+
 
     @staticmethod
     def ListaJugadores():
@@ -112,48 +131,22 @@ class Metodos():
 
         index = 0
         query = QtSql.QSqlQuery()
-        query.prepare('select nombre from Jugadores order by puntos desc')
+        query.prepare('select * from Jugadores order by puntos desc')
         if query.exec_():
             while query.next():
                 nombre = str(query.value(0))
+                puntos = str(query.value(1))
+                tiempo = str(query.value(2))
 
                 var.ui.tablaJugadores.setRowCount(index + 1)
 
                 var.ui.tablaJugadores.setItem(index, 0, QtWidgets.QTableWidgetItem(nombre))
+                var.ui.tablaJugadores.setItem(index, 1, QtWidgets.QTableWidgetItem(puntos))
+                var.ui.tablaJugadores.setItem(index, 2, QtWidgets.QTableWidgetItem(tiempo))
                 var.ui.tablaJugadores.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
                 index +=1
-        else:
-            print('Error en mostrar los jugadores')
 
 
-    @staticmethod
-    def MostrarTop5():
-
-        index = 0
-        query = QtSql.QSqlQuery()
-        query.prepare('select * from Jugadores order by puntos desc')
-        if query.exec_():
-            while query.next():
-
-                if(index<5):
-                    nombre = str(query.value(0))
-                    tiempo = str(query.value(1))
-                    puntos = str(query.value(2))
-
-                    var.ui.tablaTop.setRowCount(index + 1)
-
-                    var.ui.tablaTop.setItem(index, 0, QtWidgets.QTableWidgetItem(nombre))
-                    var.ui.tablaTop.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
-
-                    var.ui.tablaTop.setItem(index, 1, QtWidgets.QTableWidgetItem(tiempo))
-                    var.ui.tablaTop.item(index, 1).setTextAlignment(QtCore.Qt.AlignCenter)
-
-                    var.ui.tablaTop.setItem(index, 2, QtWidgets.QTableWidgetItem(puntos))
-                    var.ui.tablaTop.item(index, 2).setTextAlignment(QtCore.Qt.AlignCenter)
-                    index +=1
-                else:
-                    query.finish()
-                    print('fin')
         else:
             print('Error en mostrar los jugadores')
 
@@ -163,7 +156,26 @@ class Metodos():
             fila = var.ui.tablaJugadores.selectedItems()
             if fila:
                 fila = [dato.text() for dato in fila]
+            var.ui.lblJugador.setStyleSheet('QLabel {color: black; font: bold; font-size: 20px;}')
             var.ui.lblJugador.setText(str(fila[0]))
+
+            if var.ui.lblJugador.text() != '':
+                var.ui.btnEmpezar.setEnabled(True)
+            else:
+                var.ui.btnEmpezar.setDisabled(True)
+
+
         except Exception as error:
             print('Error al seleccionar jugador : '+error)
 
+    @staticmethod
+    def Salir():
+
+        try:
+            var.avisoSalir.show()
+            if var.avisoSalir.exec_():
+                sys.exit()
+            else:
+                var.avisoSalir.hide()
+        except Exception as error:
+            print('Error %s' % str(error))
