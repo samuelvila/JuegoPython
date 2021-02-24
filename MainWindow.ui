@@ -22,8 +22,8 @@
      <rect>
       <x>865</x>
       <y>140</y>
-      <width>351</width>
-      <height>471</height>
+      <width>365</width>
+      <height>470</height>
      </rect>
     </property>
     <property name="layoutDirection">
@@ -32,8 +32,20 @@
     <property name="styleSheet">
      <string notr="true">background-color: rgb(197, 253, 255);</string>
     </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+    <property name="showGrid">
+     <bool>true</bool>
+    </property>
     <attribute name="horizontalHeaderDefaultSectionSize">
      <number>116</number>
+    </attribute>
+    <attribute name="verticalHeaderDefaultSectionSize">
+     <number>30</number>
+    </attribute>
+    <attribute name="verticalHeaderMinimumSectionSize">
+     <number>30</number>
     </attribute>
     <column>
      <property name="text">
@@ -41,9 +53,10 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>10</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
+       <family>Impact</family>
+       <pointsize>9</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
       </font>
      </property>
      <property name="textAlignment">
@@ -56,9 +69,10 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>10</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
+       <family>Impact</family>
+       <pointsize>9</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
       </font>
      </property>
      <property name="textAlignment">
@@ -71,9 +85,10 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>10</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
+       <family>Impact</family>
+       <pointsize>9</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
       </font>
      </property>
      <property name="textAlignment">
@@ -113,7 +128,8 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(200, 203, 131);</string>
+     <string notr="true">background-color: rgb(200, 203, 131);
+font: 15pt &quot;Impact&quot;;</string>
     </property>
     <property name="text">
      <string>Añadir jugador</string>
@@ -143,7 +159,7 @@
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(200, 203, 131);
-font: 75 14pt &quot;MS Shell Dlg 2&quot;;</string>
+font: 75 14pt &quot;Impact&quot;;</string>
     </property>
     <property name="text">
      <string>Salir</string>
@@ -163,7 +179,7 @@ font: 75 14pt &quot;MS Shell Dlg 2&quot;;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(200, 203, 131);
-font: 75 14pt &quot;MS Shell Dlg 2&quot;;</string>
+font: 75 14pt &quot;Impact&quot;;</string>
     </property>
     <property name="text">
      <string>Empezar</string>

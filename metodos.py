@@ -156,7 +156,7 @@ class Metodos():
             fila = var.ui.tablaJugadores.selectedItems()
             if fila:
                 fila = [dato.text() for dato in fila]
-            var.ui.lblJugador.setStyleSheet('QLabel {color: black; font: bold; font-size: 20px;}')
+            var.ui.lblJugador.setStyleSheet('QLabel {color: black;font-family: Impact; font-size: 20px;}')
             var.ui.lblJugador.setText(str(fila[0]))
 
             if var.ui.lblJugador.text() != '':
