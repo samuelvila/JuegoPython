@@ -110,6 +110,11 @@ class Metodos():
                 var.ui.tablaJugadores.setItem(0, 1, QtWidgets.QTableWidgetItem(str(datos['puntos'])))
                 var.ui.tablaJugadores.setItem(0, 2, QtWidgets.QTableWidgetItem(str(datos['nivel'])))
                 var.ui.tablaJugadores.setItem(0, 3, QtWidgets.QTableWidgetItem(str(datos['fecha'])))
+                var.ui.tablaJugadores.item(0, 0).setTextAlignment(QtCore.Qt.AlignCenter)
+                var.ui.tablaJugadores.item(0, 1).setTextAlignment(QtCore.Qt.AlignCenter)
+                var.ui.tablaJugadores.item(0, 2).setTextAlignment(QtCore.Qt.AlignCenter)
+                var.ui.tablaJugadores.item(0, 3).setTextAlignment(QtCore.Qt.AlignCenter)
+
         except Exception as error:
             print('Erro buscar jugador : ' + error)
 
