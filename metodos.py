@@ -5,6 +5,12 @@ import time, json, sys
 
 class Metodos():
     def conexion_base_de_datos(name):
+        """
+
+
+        :return:
+        :rtype:
+        """
         db = QtSql.QSqlDatabase.addDatabase('QSQLITE')
         db.setDatabaseName(name)
         if not db.open():
@@ -19,6 +25,11 @@ class Metodos():
 
     @staticmethod
     def cargar_jugadores():
+        """
+
+        :return:
+        :rtype:
+        """
         nombreJugador = var.ui.editNombre.text().replace(' ', '')
 
         if nombreJugador == '':
@@ -44,12 +55,12 @@ class Metodos():
         Metodo que modifica los datos del jugador.
         La fecha se modifica automáticamente (usa la del sistema)
 
-        Tenemos que pasar :
-
-        String nombre
-        int puntos
-        int nivel
-
+        :param nombre:
+        :type String:
+        :param puntos:
+        :type int:
+        :param nivel:
+        :type int:
         """
         if nombre != '':
             query = QtSql.QSqlQuery()
@@ -68,7 +79,11 @@ class Metodos():
 
     @staticmethod
     def borrar_jugadores(nombre):
+        """
 
+        :param nombre:
+        :type String:
+        """
         if nombre != '':
             query = QtSql.QSqlQuery()
             query.prepare('delete from Jugadores where nombre = :nombreJugador')
@@ -82,7 +97,13 @@ class Metodos():
 
     @staticmethod
     def buscar_jugador_btn(nombre):
+        """
 
+        :param nombre:
+        :type String:
+        :return: datos or None
+        :rtype: Diccionario
+        """
         if nombre != '':
             query = QtSql.QSqlQuery()
             query.prepare('select * from Jugadores where nombre = :nombreJugador')
@@ -98,6 +119,10 @@ class Metodos():
     @staticmethod
     def mostrar_jugador_tabla():
 
+        """
+
+
+        """
         nombre = var.ui.editNombre.text()
         datos = Metodos.buscar_jugador_btn(nombre)
 
@@ -120,7 +145,12 @@ class Metodos():
 
     @staticmethod
     def mostrar_nombre_jugadores():
+        """
 
+
+        :return:
+        :rtype:
+        """
         index = 0
         query = QtSql.QSqlQuery()
         query.prepare('select * from Jugadores order by puntos desc')
@@ -147,6 +177,9 @@ class Metodos():
 
     @staticmethod
     def seleccion_jugador():
+        """
+
+        """
         try:
             fila = var.ui.tablaJugadores.selectedItems()
             if fila:
@@ -163,7 +196,9 @@ class Metodos():
 
     @staticmethod
     def salir():
+        """
 
+        """
         try:
             var.avisoSalir.show()
             if var.avisoSalir.exec_():
@@ -175,6 +210,11 @@ class Metodos():
 
     @staticmethod
     def recoger_configuracion():
+        """
+
+        :return: configuracion
+        :rtype: diccionario
+        """
         try:
             mus_volume = round(var.ui.SliderMusica.value()*0.01, 2)
             sfx_volume = round(var.ui.SliderEfectos.value()*0.01, 2)
@@ -190,6 +230,9 @@ class Metodos():
 
     @staticmethod
     def guardar_config():
+        """
+
+        """
         datos = Metodos.recoger_configuracion()
 
         j = open("config.json", 'w')
@@ -198,7 +241,9 @@ class Metodos():
 
     @staticmethod
     def cargar_config():
+        """
 
+        """
         f = open("config.json", 'r')
         config = json.load(f)
         f.close()
@@ -214,7 +259,10 @@ class Metodos():
 
     @staticmethod
     def cargar_cmb_res():
+        """
 
+
+        """
         try:
             diccioRes = ['1920 x 1080', '1280 x 720', '854 x 480', '640 x 360', '426 x 240']
             for i in diccioRes:
