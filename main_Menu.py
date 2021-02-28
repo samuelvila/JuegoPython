@@ -11,8 +11,6 @@ class DialogSalir(QtWidgets.QDialog):
         var.avisoSalir.setupUi(self)
         var.avisoSalir.buttonBoxSalir.button(QtWidgets.QDialogButtonBox.Yes).clicked.connect(metodos.Metodos.salir)
 
-
-
 class Main(QtWidgets.QMainWindow):
     def __init__(self):
 
@@ -22,20 +20,22 @@ class Main(QtWidgets.QMainWindow):
         QtWidgets.QAction(self).triggered.connect(self.close)
         var.avisoSalir = DialogSalir()
 
+        ''' CARGAR COMBOBOX '''
+        metodos.Metodos.cargar_cmb_res()
 
         ''' BOTONES '''
         var.ui.btnCargarJugador.clicked.connect(metodos.Metodos.cargar_jugadores)
         var.ui.btnEmpezar.clicked.connect(metodos.Metodos.lanzar_juego)
-        var.ui.btnEmpezar.clicked.connect(metodos.Metodos.ocultar_ventana)
-
+        var.ui.btnEmpezar.clicked.connect(self.ocultar_ventana_principal)
         var.ui.btnCargarJugador.clicked.connect(metodos.Metodos.mostrar_nombre_jugadores)
         var.ui.btnBuscar.clicked.connect(metodos.Metodos.mostrar_jugador_tabla)
         var.ui.btnRecargar.clicked.connect(metodos.Metodos.mostrar_nombre_jugadores)
         var.ui.btnSalir.clicked.connect(metodos.Metodos.salir)
-        var.ui.btnGuardarCambios.clicked.connect(metodos.Metodos.cargar_config)
-        #var.ui.btnOpciones.clicked.connect()
-        metodos.Metodos.cargar_cmb_res()
+        var.ui.btnGuardarCambios.clicked.connect(metodos.Metodos.guardar_config)
 
+
+        ''' CARGAR CONFIGURACION JSON '''
+        metodos.Metodos.cargar_config()
 
         ''' CONEXIÓN BBDD '''
         metodos.Metodos.conexion_base_de_datos(var.archivoDB)
@@ -46,7 +46,12 @@ class Main(QtWidgets.QMainWindow):
         var.ui.tablaJugadores.clicked.connect(metodos.Metodos.seleccion_jugador)
         var.ui.tablaJugadores.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
 
-
+    @staticmethod
+    def ocultar_ventana_principal():
+        window.hide()
+    @staticmethod
+    def mostrar_ventana_principal():
+        window.showNormal()
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
